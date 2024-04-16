@@ -19,7 +19,7 @@ export async function ShareNowButton() {
 
   return (
     <Button asChild>
-      <Link href="/login">Share now</Link>
+      <Link href="/sign-in">Share now</Link>
     </Button>
   );
 }
