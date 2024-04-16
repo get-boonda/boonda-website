@@ -1,3 +1,5 @@
+'use server';
+
 import { createClient } from '@/utils/supabase/server';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
@@ -15,7 +17,7 @@ export const signIn = async (formData: FormData) => {
   });
 
   if (error) {
-    return redirect('/login?message=Could not authenticate user');
+    return redirect('/sign-in?message=Could not authenticate user');
   }
 
   return redirect('/upload');
@@ -39,8 +41,8 @@ export const signUp = async (formData: FormData) => {
 
   if (error) {
     console.error(error);
-    return redirect('/login?message=Could not authenticate user');
+    return redirect('/sign-up?message=Could not authenticate user');
   }
 
-  return redirect('/login?message=Check email to continue sign in process');
+  return redirect('/sign-up?message=Check email to continue sign in process');
 };
