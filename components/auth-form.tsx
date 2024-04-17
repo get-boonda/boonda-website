@@ -26,15 +26,16 @@ import { Loader } from 'lucide-react';
 import { useSignIn } from '@/hooks/use-sign-in';
 import { useSignUp } from '@/hooks/use-sign-up';
 import { AuthFormSchema } from '@/shared/validations/auth-form';
+import { useState } from 'react';
 
 type AuthFormProps = {
-  message: string;
   intent: 'sign-in' | 'sign-up';
 };
 
-export function AuthForm({ message, intent }: AuthFormProps) {
-  const { mutate: signIn, isPending: isSigningIn } = useSignIn();
-  const { mutate: signUp, isPending: isSigningUp } = useSignUp();
+export function AuthForm({ intent }: AuthFormProps) {
+  const [message, setMessage] = useState<string | null>(null);
+  const { mutateAsync: signIn, isPending: isSigningIn } = useSignIn();
+  const { mutateAsync: signUp, isPending: isSigningUp } = useSignUp();
   const form = useForm<z.infer<typeof AuthFormSchema>>({
     resolver: zodResolver(AuthFormSchema),
     defaultValues: {
@@ -45,14 +46,21 @@ export function AuthForm({ message, intent }: AuthFormProps) {
 
   const isSubmitting = isSigningIn || isSigningUp;
 
-  function onSubmit(values: z.infer<typeof AuthFormSchema>) {
+  async function onSubmit(values: z.infer<typeof AuthFormSchema>) {
     if (intent === 'sign-up') {
-      signUp({ email: values.email, password: values.password });
+      setMessage(
+        await signUp({
+          email: values.email,
+          password: values.password,
+        })
+      );
 
       return;
     }
 
-    signIn({ email: values.email, password: values.password });
+    setMessage(
+      await signIn({ email: values.email, password: values.password })
+    );
   }
 
   const title = intent === 'sign-in' ? 'Sign In' : 'Sign Up';

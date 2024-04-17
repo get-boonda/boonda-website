@@ -22,11 +22,13 @@ export function useSignIn() {
         }),
       });
 
+      let message: string | null = null;
+
       if (response.redirected) {
-        router.push(response.url);
+        message = new URL(response.url).searchParams.get('message');
       }
 
-      return null;
+      return message;
     },
   });
 }

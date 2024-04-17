@@ -2,11 +2,7 @@ import { AuthForm } from '@/components/auth-form';
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 
-export default async function SignUp({
-  searchParams,
-}: {
-  searchParams: { message: string };
-}) {
+export default async function SignUp() {
   const supabase = createClient();
 
   const {
@@ -19,7 +15,7 @@ export default async function SignUp({
 
   return (
     <div className="flex w-full justify-center items-center h-[calc(100vh-64px)]">
-      <AuthForm intent="sign-up" message={searchParams.message} />
+      <AuthForm intent="sign-up" />
     </div>
   );
 }
