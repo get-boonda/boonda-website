@@ -1,4 +1,4 @@
-import { createClient } from '@/app/utils/supabase/server';
+import { createClient } from '@supabase/supabase-js';
 import { z } from 'zod';
 const body = z.object({
   name: z.string(),
@@ -27,16 +27,20 @@ export async function POST(request: Request) {
 
   const { name, sizeInBytes } = body.parse(await request.json());
 
-  console.log({
-    name,
-    sizeInBytes,
-  });
-
-  const client = createClient(process.env.SUPABASE_SERVICE_KEY);
+  const client = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_KEY!
+  );
 
   const uploadInfo = await client.storage
     .from('files')
     .createSignedUploadUrl(name);
+
+  console.log({
+    uploadInfo,
+    error: uploadInfo.error,
+    name,
+  });
 
   if (uploadInfo.error) {
     console.log(uploadInfo.error);
