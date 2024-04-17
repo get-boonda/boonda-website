@@ -1,5 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import { z } from 'zod';
+import { nanoid } from 'nanoid';
+
 const body = z.object({
   name: z.string(),
   sizeInBytes: z.number(),
@@ -34,7 +36,7 @@ export async function POST(request: Request) {
 
   const uploadInfo = await client.storage
     .from('files')
-    .createSignedUploadUrl(name);
+    .createSignedUploadUrl(nanoid(12) + '/' + name);
 
   console.log({
     uploadInfo,
