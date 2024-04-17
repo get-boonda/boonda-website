@@ -9,7 +9,10 @@ export function NavbarAuthButton() {
   const { data: user } = useSession();
 
   return user ? (
-    <SignOutButton />
+    <div>
+      <span className="mr-4">{user.email}</span>
+      <SignOutButton />
+    </div>
   ) : (
     <Button asChild size="sm">
       <Link href="/sign-in">Sign in</Link>
