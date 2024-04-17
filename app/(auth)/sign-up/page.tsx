@@ -14,7 +14,7 @@ export default async function SignUp() {
   }
 
   return (
-    <div className="flex w-full justify-center items-center h-[calc(100vh-64px)]">
+    <div className="flex w-full justify-center items-center">
       <AuthForm intent="sign-up" />
     </div>
   );

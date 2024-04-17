@@ -10,6 +10,7 @@ import {
   QueryClient,
   dehydrate,
 } from '@tanstack/react-query';
+import { Footer } from '@/components/footer';
 
 const fontSans = FontSans({
   subsets: ['latin'],
