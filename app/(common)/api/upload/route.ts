@@ -34,9 +34,11 @@ export async function POST(request: Request) {
     process.env.SUPABASE_SERVICE_KEY!
   );
 
+  const generatedFileName = nanoid(12) + '/' + name;
+
   const uploadInfo = await client.storage
     .from('files')
-    .createSignedUploadUrl(nanoid(12) + '/' + name);
+    .createSignedUploadUrl(generatedFileName);
 
   if (uploadInfo.error) {
     console.log(uploadInfo.error);
@@ -58,7 +60,7 @@ export async function POST(request: Request) {
 
   const expiresAt = new Date(Date.now() + expiresIn).getTime();
 
-  const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/files/${name}`;
+  const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/files/${generatedFileName}`;
 
   return new Response(JSON.stringify({ uploadInfo, expiresAt, url }), {
     status: 200,

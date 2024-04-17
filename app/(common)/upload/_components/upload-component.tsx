@@ -33,6 +33,7 @@ export const {
     // Only needed if you don't want `Dialog.Root` from '@radix-ui/react-dialog'
     // shadcn drawer needs a custom Wrapper
     UploadSuccessDialog: {
+      // @ts-ignore - Library still needs improvement
       Wrapper: Dialog,
       Component: UploadSuccessModal,
     },
@@ -85,16 +86,14 @@ export function UploadComponent() {
     }
 
     upload(values.file, {
-      onSuccess: (result) => {
-        const path = result?.data.path;
-
-        if (!path) {
+      onSuccess: (url) => {
+        if (!url) {
           toast.error('An error occurred while uploading the file');
           return;
         }
 
         pushModal('UploadSuccessDialog', {
-          fileURL: path,
+          fileURL: url,
         });
       },
     });

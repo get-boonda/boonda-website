@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import { useMutation } from '@tanstack/react-query';
+import { z } from 'zod';
 
 export function useUpload() {
   return useMutation({
@@ -20,17 +21,15 @@ export function useUpload() {
         return;
       }
 
-      const { expiresAt, uploadInfo } = await response.json();
+      const { uploadInfo, url } = await response.json();
+
+      const parsedURL = z.string().url().parse(url);
 
       await supabase.storage
         .from('files')
         .uploadToSignedUrl(uploadInfo.data.path, uploadInfo.data.token, file!);
 
-      return uploadInfo as {
-        data: {
-          path: string;
-        };
-      };
+      return parsedURL;
     },
   });
 }
