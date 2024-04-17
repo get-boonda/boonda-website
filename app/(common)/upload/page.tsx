@@ -1,6 +1,7 @@
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 import { UploadButton } from './_components/upload-button';
+import { UploadComponent } from './_components/upload-component';
 
 export default async function UploadPage() {
   const supabase = createClient();
@@ -19,7 +20,7 @@ export default async function UploadPage() {
         <div className="flex flex-col gap-16 items-center">
           <section className="py-8 pt-12">
             <h1 className="sr-only">Share your files fast with Boonda</h1>
-            <p className="text-3xl lg:text-4xl !leading-tight mx-auto max-w-xl text-center">
+            <p className="text-5xl lg:text-6xl !leading-tight mx-auto max-w-xl text-center">
               Share your files
               <span className="font-bold"> fast</span> with{' '}
               <span className="font-bold">Boonda</span>
@@ -27,7 +28,8 @@ export default async function UploadPage() {
           </section>
 
           <div className="flex justify-center items-center">
-            <UploadButton />
+            <UploadComponent />
+            {/* <UploadButton /> */}
           </div>
           <div className="w-full p-[1px] bg-gradient-to-r from-transparent via-foreground/10 to-transparent my-8" />
         </div>
