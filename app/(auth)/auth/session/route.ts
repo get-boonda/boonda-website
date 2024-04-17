@@ -3,5 +3,7 @@ import { createClient } from '@/utils/supabase/server';
 export async function GET() {
   const supabase = createClient();
 
-  return Response.json(await supabase.auth.getUser());
+  const session = await supabase.auth.getUser();
+  console.log({ session });
+  return Response.json(session);
 }

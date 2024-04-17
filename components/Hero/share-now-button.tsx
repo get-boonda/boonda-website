@@ -1,14 +1,12 @@
-import { createClient } from '@/utils/supabase/server';
-import { Button } from './ui/button';
+'use client';
+
+import { Button } from '../ui/button';
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
+import { useSession } from '@/hooks/use-session';
 
-export async function ShareNowButton() {
-  const supabase = createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+export function ShareNowButton() {
+  const { data: user } = useSession();
 
   if (user) {
     return (
