@@ -1,10 +1,7 @@
+import { DEFAULT_URL } from '@/lib/constants';
 import { createClient } from '@supabase/supabase-js';
 import { useMutation } from '@tanstack/react-query';
 import { z } from 'zod';
-
-const defaultUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : 'http://localhost:3000';
 
 export function useUpload() {
   return useMutation({
@@ -14,7 +11,7 @@ export function useUpload() {
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
       );
-      const response = await fetch(`${defaultUrl}/api/upload`, {
+      const response = await fetch(`${DEFAULT_URL}/api/upload`, {
         method: 'POST',
         body: JSON.stringify({ name: file.name, sizeInBytes: file.size }),
       });

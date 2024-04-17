@@ -1,5 +1,6 @@
 'use server';
 
+import { DEFAULT_URL } from '@/lib/constants';
 import { createClient } from '@/utils/supabase/server';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
@@ -35,7 +36,7 @@ export const signUp = async (formData: FormData) => {
     email,
     password,
     options: {
-      emailRedirectTo: `${origin}/auth/callback`,
+      emailRedirectTo: `${DEFAULT_URL}/auth/callback`,
     },
   });
 

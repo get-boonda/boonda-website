@@ -3,18 +3,15 @@ import './globals.css';
 import { cn } from '@/lib/utils';
 import { TanStackQueryProvider } from '@/providers/tanstack-query-provider';
 import { Toaster } from '@/components/ui/sonner';
+import { DEFAULT_URL } from '@/lib/constants';
 
 const fontSans = FontSans({
   subsets: ['latin'],
   variable: '--font-sans',
 });
 
-const defaultUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : 'http://localhost:3000';
-
 export const metadata = {
-  metadataBase: new URL(defaultUrl),
+  metadataBase: new URL(DEFAULT_URL),
   title: 'Next.js and Supabase Starter Kit',
   description: 'The fastest way to build apps with Next.js and Supabase',
 };
