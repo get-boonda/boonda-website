@@ -2,6 +2,7 @@ import { Inter as FontSans } from 'next/font/google';
 import './globals.css';
 import { cn } from '@/lib/utils';
 import { TanStackQueryProvider } from '@/providers/tanstack-query-provider';
+import { Toaster } from '@/components/ui/sonner';
 
 const fontSans = FontSans({
   subsets: ['latin'],
@@ -31,7 +32,10 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <TanStackQueryProvider>{children}</TanStackQueryProvider>
+        <TanStackQueryProvider>
+          {children}
+          <Toaster />
+        </TanStackQueryProvider>
       </body>
     </html>
   );

@@ -1,6 +1,5 @@
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
-import { UploadButton } from './_components/upload-button';
 import { UploadComponent } from './_components/upload-component';
 
 export default async function UploadPage() {

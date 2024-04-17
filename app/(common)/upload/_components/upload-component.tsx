@@ -8,11 +8,36 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form';
+import { createPushModal } from 'pushmodal';
+import { Dialog } from '@/components/ui/dialog';
+import { UploadSuccessModal } from '@/components/upload-success-modal';
 import { useUpload } from '@/hooks/use-upload';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FileCheck2Icon, Loader } from 'lucide-react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { toast } from 'sonner';
+
+export const {
+  pushModal,
+  popModal,
+  popAllModals,
+  replaceWithModal,
+  useOnPushModal,
+  onPushModal,
+  ModalProvider,
+} = createPushModal({
+  modals: {
+    // Short hand
+    // Longer definition where you can choose what wrapper you want
+    // Only needed if you don't want `Dialog.Root` from '@radix-ui/react-dialog'
+    // shadcn drawer needs a custom Wrapper
+    UploadSuccessDialog: {
+      Wrapper: Dialog,
+      Component: UploadSuccessModal,
+    },
+  },
+});
 
 const UploadSchema = z.object({
   file: z.instanceof(File).nullable(),
@@ -33,21 +58,6 @@ export function UploadComponent() {
 
   function handleOnDrop(acceptedFiles: FileList | null) {
     if (acceptedFiles && acceptedFiles.length > 0) {
-      // const allowedTypes = [
-      //   { name: 'csv', types: ['text/csv'] },
-      //   {
-      //     name: 'excel',
-      //     types: [
-      //       'application/vnd.ms-excel',
-      //       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-      //     ],
-      //   },
-      // ];
-
-      // const fileType = allowedTypes.find((allowedType) =>
-      //   allowedType.types.find((type) => type === acceptedFiles[0].type)
-      // );
-
       const fileType = acceptedFiles[0].type;
 
       if (!fileType) {
@@ -74,44 +84,62 @@ export function UploadComponent() {
       return;
     }
 
-    upload(values.file);
+    upload(values.file, {
+      onSuccess: (result) => {
+        const path = result?.data.path;
+
+        if (!path) {
+          toast.error('An error occurred while uploading the file');
+          return;
+        }
+
+        pushModal('UploadSuccessDialog', {
+          fileURL: path,
+        });
+      },
+    });
   }
 
   return (
-    <FormProvider {...form}>
-      <form
-        className="flex flex-col items-center justify-center w-96 h-36 gap-2"
-        onSubmit={form.handleSubmit(handleFormSubmit)}
-        noValidate
-        autoComplete="off"
-      >
-        <FormField
-          control={form.control}
-          name="file"
-          render={({ field }) => (
-            <FormItem className="w-full h-full">
-              <FormControl>
-                <Dropzone
-                  {...field}
-                  dropMessage="Drop a file or click here"
-                  handleOnDrop={handleOnDrop}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
+    <>
+      <ModalProvider />
+      <FormProvider {...form}>
+        <form
+          className="flex flex-col items-center justify-center w-96 h-36 gap-2"
+          onSubmit={form.handleSubmit(handleFormSubmit)}
+          noValidate
+          autoComplete="off"
+        >
+          <FormField
+            control={form.control}
+            name="file"
+            render={({ field }) => (
+              <FormItem className="w-full h-full">
+                <FormControl>
+                  <Dropzone
+                    {...field}
+                    dropMessage="Drop a file or click here"
+                    handleOnDrop={handleOnDrop}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {form.watch('file') && (
+            <div className="flex items-center justify-center gap-3 p-4 relative">
+              <FileCheck2Icon className="h-4 w-4" />
+              <p className="text-sm font-medium">{form.watch('file')?.name}</p>
+            </div>
           )}
-        />
-        {form.watch('file') && (
-          <div className="flex items-center justify-center gap-3 p-4 relative">
-            <FileCheck2Icon className="h-4 w-4" />
-            <p className="text-sm font-medium">{form.watch('file')?.name}</p>
+          <div className="flex justify-end items-center w-full">
+            <Button className="w-full" type="submit" disabled={isUploading}>
+              {isUploading && <Loader className="size-4 animate-spin mr-2" />}
+              Upload
+            </Button>
           </div>
-        )}
-        <Button type="submit" disabled={isUploading}>
-          {isUploading && <Loader className="size-4 animate-spin mr-2" />}
-          Submit
-        </Button>
-      </form>
-    </FormProvider>
+        </form>
+      </FormProvider>
+    </>
   );
 }

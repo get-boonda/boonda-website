@@ -38,12 +38,6 @@ export async function POST(request: Request) {
     .from('files')
     .createSignedUploadUrl(nanoid(12) + '/' + name);
 
-  console.log({
-    uploadInfo,
-    error: uploadInfo.error,
-    name,
-  });
-
   if (uploadInfo.error) {
     console.log(uploadInfo.error);
     return new Response(

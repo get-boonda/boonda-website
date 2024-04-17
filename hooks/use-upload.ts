@@ -21,11 +21,16 @@ export function useUpload() {
       }
 
       const { expiresAt, uploadInfo } = await response.json();
-      console.log({ uploadInfo });
 
       await supabase.storage
         .from('files')
         .uploadToSignedUrl(uploadInfo.data.path, uploadInfo.data.token, file!);
+
+      return uploadInfo as {
+        data: {
+          path: string;
+        };
+      };
     },
   });
 }
