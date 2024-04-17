@@ -58,7 +58,9 @@ export async function POST(request: Request) {
 
   const expiresAt = new Date(Date.now() + expiresIn).getTime();
 
-  return new Response(JSON.stringify({ uploadInfo, expiresAt }), {
+  const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/files/${name}`;
+
+  return new Response(JSON.stringify({ uploadInfo, expiresAt, url }), {
     status: 200,
   });
 }
