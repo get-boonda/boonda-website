@@ -3,7 +3,7 @@ import { ShareNowButton } from './share-now-button';
 export default function Header() {
   return (
     <div className="flex flex-col gap-16 items-center">
-      <section className="py-8 pt-12">
+      <section className="py-8 pt-24">
         <h1 className="sr-only">Share your files fast with Boonda</h1>
         <p
           style={{
@@ -16,11 +16,11 @@ export default function Header() {
           <span className="font-bold"> fast</span> with{' '}
           <span className="font-bold">Boonda</span>
         </p>
-      </section>
 
-      <div className="flex justify-center items-center">
-        <ShareNowButton />
-      </div>
+        <div className="flex justify-center items-center pt-12">
+          <ShareNowButton />
+        </div>
+      </section>
     </div>
   );
 }
