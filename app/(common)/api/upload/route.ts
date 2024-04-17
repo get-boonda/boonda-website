@@ -1,5 +1,5 @@
-import { createClient } from "@/app/utils/supabase/server";
-import { z } from "zod";
+import { createClient } from '@/app/utils/supabase/server';
+import { z } from 'zod';
 const body = z.object({
   name: z.string(),
   sizeInBytes: z.number(),
@@ -7,7 +7,7 @@ const body = z.object({
 
 export async function POST(request: Request) {
   const response = await fetch(
-    `https://proxycheck.io/v2/${request.headers.get("x-forwarded-for")}?key=${
+    `https://proxycheck.io/v2/${request.headers.get('x-forwarded-for')}?key=${
       process.env.PROXYCHECK_API_KEY
     }&risk=1&short=1`
   );
@@ -17,7 +17,7 @@ export async function POST(request: Request) {
   if (risk > 66) {
     return new Response(
       JSON.stringify({
-        error: "You are not allowed to upload files. Your IP is too suspicious",
+        error: 'You are not allowed to upload files. Your IP is too suspicious',
       }),
       {
         status: 403,
@@ -27,16 +27,22 @@ export async function POST(request: Request) {
 
   const { name, sizeInBytes } = body.parse(await request.json());
 
+  console.log({
+    name,
+    sizeInBytes,
+  });
+
   const client = createClient(process.env.SUPABASE_SERVICE_KEY);
 
   const uploadInfo = await client.storage
-    .from("files")
+    .from('files')
     .createSignedUploadUrl(name);
 
   if (uploadInfo.error) {
+    console.log(uploadInfo.error);
     return new Response(
       JSON.stringify({
-        error: "Failed to create upload URL",
+        error: 'Failed to create upload URL',
       }),
       {
         status: 400,

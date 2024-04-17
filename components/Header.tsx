@@ -1,11 +1,10 @@
 import { ShareNowButton } from './share-now-button';
-import { Button } from './ui/button';
 
 export default function Header() {
   return (
     <div className="flex flex-col gap-16 items-center">
       <section className="py-8 pt-12">
-        <h1 className="sr-only">Supabase and Next.js Starter Template</h1>
+        <h1 className="sr-only">Share your files fast with Boonda</h1>
         <p className="text-3xl lg:text-4xl !leading-tight mx-auto max-w-xl text-center">
           Share your files
           <span className="font-bold"> fast</span> with{' '}
