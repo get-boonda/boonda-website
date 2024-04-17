@@ -110,7 +110,7 @@ export function AuthForm({ message, intent }: AuthFormProps) {
               )}
             />
             {message && (
-              <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
+              <p className="text-muted-foreground text-sm border p-2 rounded-sm border-border">
                 {message}
               </p>
             )}
