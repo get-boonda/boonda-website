@@ -1,20 +1,22 @@
-import Link from 'next/link';
-import { Button } from './ui/button';
-import { SignOutButton } from './sign-out-button';
-import { createClient } from '@/utils/supabase/server';
+import {
+  HydrationBoundary,
+  QueryClient,
+  dehydrate,
+} from '@tanstack/react-query';
+import { getSessionServer } from '@/shared/get-session';
+import { NavbarAuthButton } from './navbar-auth-button';
 
 export default async function AuthButton() {
-  const supabase = createClient();
+  const queryClient = new QueryClient();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  await queryClient.prefetchQuery({
+    queryKey: ['session'],
+    queryFn: getSessionServer,
+  });
 
-  return user ? (
-    <SignOutButton />
-  ) : (
-    <Button asChild size="sm">
-      <Link href="/sign-in">Sign in</Link>
-    </Button>
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <NavbarAuthButton />
+    </HydrationBoundary>
   );
 }
