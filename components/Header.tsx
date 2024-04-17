@@ -5,7 +5,13 @@ export default function Header() {
     <div className="flex flex-col gap-16 items-center">
       <section className="py-8 pt-12">
         <h1 className="sr-only">Share your files fast with Boonda</h1>
-        <p className="text-5xl lg:text-6xl !leading-tight mx-auto max-w-xl text-center">
+        <p
+          style={{
+            background:
+              'linear-gradient(to left bottom, rgb(255, 255, 255) 50%, rgba(255, 255, 255, 0.38)) text',
+          }}
+          className="text-5xl text-transparent lg:text-6xl !leading-tight mx-auto max-w-xl text-center"
+        >
           Share your files
           <span className="font-bold"> fast</span> with{' '}
           <span className="font-bold">Boonda</span>
@@ -15,7 +21,6 @@ export default function Header() {
       <div className="flex justify-center items-center">
         <ShareNowButton />
       </div>
-      <div className="w-full p-[1px] bg-gradient-to-r from-transparent via-foreground/10 to-transparent my-8" />
     </div>
   );
 }

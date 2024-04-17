@@ -71,12 +71,20 @@ export function AuthForm({ message, intent }: AuthFormProps) {
     intent === 'sign-in' ? '/sign-up' : '/sign-in';
 
   return (
-    <Card className="max-w-[516px] w-full">
-      <CardHeader>
+    <Card className="max-w-[516px] w-full relative bg-zinc-950">
+      <div
+        style={{
+          background:
+            'conic-gradient(from 230.29deg at 51.63% 52.16%, rgb(36, 0, 255) 0deg, rgb(0, 135, 255) 67.5deg, rgb(108, 39, 157) 198.75deg, rgb(24, 38, 163) 251.25deg, rgb(54, 103, 196) 301.88deg, rgb(105, 30, 255) 360deg)',
+        }}
+        className="blur-[160px] rounded-xl opacity-35 w-full h-full absolute inset-0 pointer-events-none"
+      />
+      <div className="absolute inset-0 bg-zinc-950/65 pointer-events-none backdrop-blur-sm rounded-xl"></div>
+      <CardHeader className="z-[1] relative">
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="z-[1] relative">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
@@ -86,7 +94,7 @@ export function AuthForm({ message, intent }: AuthFormProps) {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="shadcn" type="email" {...field} />
+                    <Input placeholder="Your email" type="email" {...field} />
                   </FormControl>
                 </FormItem>
               )}
@@ -98,7 +106,11 @@ export function AuthForm({ message, intent }: AuthFormProps) {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="shadcn" type="password" {...field} />
+                    <Input
+                      placeholder="Your password"
+                      type="password"
+                      {...field}
+                    />
                   </FormControl>
                   {intent === 'sign-up' && (
                     <FormDescription>
@@ -115,13 +127,11 @@ export function AuthForm({ message, intent }: AuthFormProps) {
               </p>
             )}
             <div>
-              <div>
-                <Button asChild variant="link" className="p-0">
-                  <Link href={logMessageRedirectRoute}>
-                    {accountHelperText} {logMessage}
-                  </Link>
-                </Button>
-              </div>
+              <Button asChild variant="link" className="p-0">
+                <Link href={logMessageRedirectRoute}>
+                  {accountHelperText} {logMessage}
+                </Link>
+              </Button>
               <div className="flex justify-end items-center">
                 <Button type="submit" disabled={isSubmitting}>
                   {isSubmitting && (

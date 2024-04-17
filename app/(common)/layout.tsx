@@ -16,7 +16,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="min-h-screen flex flex-col items-center">
+    <main
+      style={{
+        background:
+          'radial-gradient(ellipse 80% 50% at 50% -15%,rgba(120,119,198,0.3),hsla(0,0%,100%,0))',
+      }}
+      className="min-h-screen flex flex-col items-center"
+    >
       <Navbar />
       {children}
     </main>

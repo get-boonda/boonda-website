@@ -26,11 +26,17 @@ export default async function UploadPage() {
             </p>
           </section>
 
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center relative">
             <UploadComponent />
             {/* <UploadButton /> */}
+            <div
+              style={{
+                background:
+                  'conic-gradient(from 230.29deg at 51.63% 52.16%, rgb(36, 0, 255) 0deg, rgb(0, 135, 255) 67.5deg, rgb(108, 39, 157) 198.75deg, rgb(24, 38, 163) 251.25deg, rgb(54, 103, 196) 301.88deg, rgb(105, 30, 255) 360deg)',
+              }}
+              className="blur-[160px] opacity-70 w-full h-full absolute inset-0 pointer-events-none"
+            />
           </div>
-          <div className="w-full p-[1px] bg-gradient-to-r from-transparent via-foreground/10 to-transparent my-8" />
         </div>
       </div>
     </div>
