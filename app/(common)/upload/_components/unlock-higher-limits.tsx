@@ -1,5 +1,6 @@
 "use client";
 
+import { SignOutButton } from "@/components/sign-out-button";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -27,9 +28,7 @@ export function UnlockHigherLimits({}: UnlockHigherLimitsProps) {
         </CardHeader>
         <CardContent>
           <span className="text-xs text-muted-foreground"></span>
-          <Button className="w-full" variant="outline">
-            Sign out
-          </Button>
+          <SignOutButton redirectToSignIn={false} className="w-full" />
         </CardContent>
       </Card>
     );
@@ -45,8 +44,8 @@ export function UnlockHigherLimits({}: UnlockHigherLimitsProps) {
       </CardHeader>
       <CardContent>
         <span className="text-xs text-muted-foreground"></span>
-        <Link className="w-full" href="/sign-up">
-          <Button className="w-full">Sign up</Button>
+        <Link className="w-full" href="/sign-in">
+          <Button className="w-full">Sign in</Button>
         </Link>
       </CardContent>
     </Card>

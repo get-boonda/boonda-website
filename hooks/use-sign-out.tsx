@@ -10,7 +10,7 @@ export function useSignOut() {
 
   return useMutation({
     mutationKey: ["sign-out"],
-    mutationFn: async () => {
+    mutationFn: async (redirectToSignIn: boolean = true) => {
       const supabase = createClient();
 
       const result = await supabase.auth.signOut();
@@ -19,7 +19,9 @@ export function useSignOut() {
         throw new Error(result.error.message);
       }
 
-      //router.push('/sign-in');
+      if (redirectToSignIn) {
+        router.push("/sign-in");
+      }
 
       return null;
     },

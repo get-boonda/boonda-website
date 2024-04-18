@@ -131,12 +131,6 @@ export function UploadComponent() {
               </FormItem>
             )}
           />
-          {/*form.watch("file") && (
-            <div className="flex items-center justify-center gap-3 p-4 relative">
-              <FileCheck2Icon className="h-4 w-4" />
-              <p className="text-sm font-medium">{form.watch("file")?.name}</p>
-            </div>
-          )*/}
           <div className="flex justify-end items-center w-full">
             <Button
               className="w-full opacity-100"
