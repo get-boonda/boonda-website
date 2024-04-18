@@ -1,6 +1,6 @@
 ## TODO
 
-- [ ] Adicionar Metatags e favicon.
+- [x] Adicionar Metatags e favicon.
 - [ ] Adicionar o tempo que a imagem ficará disponível.
 - [ ] Remover o arquivo do storage após expirar.
 - [x] Adicionar o email do usuário na navbar quando estiver logado.
