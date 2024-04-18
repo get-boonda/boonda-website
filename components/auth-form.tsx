@@ -39,7 +39,7 @@ export function AuthForm({ intent }: AuthFormProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const localPort = searchParams.get('port');
-  const desktopSuccess = searchParams.get('success');
+  const desktopSuccess = searchParams.get('desktop-success');
   const [message, setMessage] = useState<string | null>(null);
   const { mutateAsync: signIn, isPending: isSigningIn } = useSignIn();
   const { mutateAsync: signUp, isPending: isSigningUp } = useSignUp();
