@@ -1,16 +1,14 @@
-import { UploadComponent } from "./_components/upload-component";
 import { UnlockHigherLimits } from "./_components/unlock-higher-limits";
-import { useSession } from "@/hooks/use-session";
-import { QueryClient } from "@tanstack/react-query";
+import { UploadComponent } from "./_components/upload-component";
+import { DEFAULT_URL } from "@/lib/constants";
+
+export const metadata = {
+  metadataBase: new URL(DEFAULT_URL),
+  title: "Boonda - Upload and Share Files",
+  description: "Upload and share your files with Boonda.",
+};
 
 export default async function UploadPage() {
-  const queryClient = new QueryClient();
-
-  await queryClient.prefetchQuery({
-    queryKey: ["session"],
-    queryFn: useSession,
-  });
-
   return (
     <div className="flex-1 w-full flex flex-col gap-20 items-center">
       <div className="animate-in flex-1 flex flex-col gap-20 max-w-4xl px-3">
