@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -12,78 +12,135 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import Link from "next/link";
-import { Loader } from "lucide-react";
-import { useSignIn } from "@/hooks/use-sign-in";
-import { useSignUp } from "@/hooks/use-sign-up";
-import { AuthFormSchema } from "@/shared/validations/auth-form";
-import { useState } from "react";
+} from '@/components/ui/card';
+import Link from 'next/link';
+import { Loader } from 'lucide-react';
+import { useSignIn } from '@/hooks/use-sign-in';
+import { useSignUp } from '@/hooks/use-sign-up';
+import { AuthFormSchema } from '@/shared/validations/auth-form';
+import { useEffect, useState } from 'react';
+import { createClient } from '@/utils/supabase/client';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 
 type AuthFormProps = {
-  intent: "sign-in" | "sign-up";
+  intent: 'sign-in' | 'sign-up' | 'desktop-sign-in' | 'desktop-sign-up';
 };
 
 export function AuthForm({ intent }: AuthFormProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const localPort = searchParams.get('port');
+  const desktopSuccess = searchParams.get('success');
   const [message, setMessage] = useState<string | null>(null);
   const { mutateAsync: signIn, isPending: isSigningIn } = useSignIn();
   const { mutateAsync: signUp, isPending: isSigningUp } = useSignUp();
   const form = useForm<z.infer<typeof AuthFormSchema>>({
     resolver: zodResolver(AuthFormSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
   });
 
-  const isSubmitting = isSigningIn || isSigningUp;
-
-  async function onSubmit(values: z.infer<typeof AuthFormSchema>) {
-    if (intent === "sign-up") {
-      setMessage(
-        await signUp({
-          email: values.email,
-          password: values.password,
-        })
-      );
-
+  useEffect(() => {
+    if (!desktopSuccess || !router || !pathname) {
       return;
     }
 
-    setMessage(
-      await signIn({ email: values.email, password: values.password })
-    );
+    completeDesktopSignIn().then(() => {
+      router.replace(pathname);
+    });
+  }, [desktopSuccess]);
+
+  const isSubmitting = isSigningIn || isSigningUp;
+  const isIntentToSignIn = intent === 'sign-in' || intent === 'desktop-sign-in';
+  const isDesktopSignIn = intent === 'desktop-sign-in';
+  const isDesktopSignUp = intent === 'desktop-sign-up';
+
+  async function completeDesktopSignIn() {
+    const supabase = createClient();
+
+    const session = await supabase.auth.getSession();
+
+    if (session.error || !session.data.session) {
+      console.error(session.error?.message ?? "Couldn't get session");
+      return;
+    }
+
+    const port = z.coerce.number().int().positive().parse(localPort);
+
+    await fetch(`http://localhost:${port}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        access_token: session.data.session?.access_token,
+        refresh_token: session.data.session?.refresh_token,
+      }),
+    });
+
+    setMessage('Check your desktop app!');
   }
 
-  const title = intent === "sign-in" ? "Sign In" : "Sign Up";
-  const description =
-    intent === "sign-in"
-      ? "Sign in to your account right now."
-      : "Create your account right now.";
+  async function onSubmit(values: z.infer<typeof AuthFormSchema>) {
+    if (intent === 'sign-up' || intent === 'desktop-sign-up') {
+      const signUpResponse = await signUp({
+        email: values.email,
+        password: values.password,
+        intent: intent,
+      });
 
-  const accountHelperText =
-    intent === "sign-in"
-      ? "Don’t have an account?"
-      : "Already have an account?";
+      setMessage(signUpResponse);
+      return;
+    }
 
-  const logMessage = intent === "sign-in" ? "Sign Up" : "Sign In";
-  const logMessageRedirectRoute =
-    intent === "sign-in" ? "/sign-up" : "/sign-in";
+    const signInResponse = await signIn({
+      email: values.email,
+      password: values.password,
+    });
+
+    if (intent === 'sign-in') {
+      setMessage(signInResponse);
+      return;
+    }
+
+    completeDesktopSignIn();
+  }
+
+  const title = isIntentToSignIn ? 'Sign In' : 'Sign Up';
+  const description = isIntentToSignIn
+    ? 'Sign in to your account right now.'
+    : 'Create your account right now.';
+
+  const accountHelperText = isIntentToSignIn
+    ? 'Don’t have an account?'
+    : 'Already have an account?';
+
+  const logMessage = isIntentToSignIn ? 'Sign Up' : 'Sign In';
+  const logMessageRedirectRoute = isDesktopSignIn
+    ? '/desktop-sign-up'
+    : isDesktopSignUp
+    ? '/desktop-sign-in'
+    : isIntentToSignIn
+    ? '/sign-up'
+    : '/sign-in';
 
   return (
     <Card className="max-w-[516px] w-full relative bg-zinc-950">
       <div
         style={{
           background:
-            "conic-gradient(from 230.29deg at 51.63% 52.16%, rgb(36, 0, 255) 0deg, rgb(0, 135, 255) 67.5deg, rgb(108, 39, 157) 198.75deg, rgb(24, 38, 163) 251.25deg, rgb(54, 103, 196) 301.88deg, rgb(105, 30, 255) 360deg)",
+            'conic-gradient(from 230.29deg at 51.63% 52.16%, rgb(36, 0, 255) 0deg, rgb(0, 135, 255) 67.5deg, rgb(108, 39, 157) 198.75deg, rgb(24, 38, 163) 251.25deg, rgb(54, 103, 196) 301.88deg, rgb(105, 30, 255) 360deg)',
         }}
         className="blur-[160px] rounded-xl opacity-35 w-full h-full absolute inset-0 pointer-events-none"
       />
@@ -120,7 +177,7 @@ export function AuthForm({ intent }: AuthFormProps) {
                       {...field}
                     />
                   </FormControl>
-                  {intent === "sign-up" && (
+                  {intent === 'sign-up' && (
                     <FormDescription>
                       At least 2 characters long.
                     </FormDescription>

@@ -4,10 +4,10 @@ import { createClient } from '@/utils/supabase/server';
 import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
-export const metadata = {
+export const metadata: Metadata = {
   metadataBase: new URL(DEFAULT_URL),
-  title: 'Boonda - Sign Up',
-  description: 'Sign Up to unlock higher limits on Boonda.',
+  title: 'Boonda - Sign In',
+  description: 'Sign In to your Boonda account to unlock higher limits.',
   icons: {
     icon: [
       {
@@ -23,8 +23,8 @@ export const metadata = {
   twitter: {
     card: 'summary_large_image',
     site: 'boonda.app',
-    title: 'Boonda - Sign Up',
-    description: 'Sign Up to unlock higher limits on Boonda.',
+    title: 'Boonda - Sign In',
+    description: 'Sign In to your Boonda account to unlock higher limits.',
     images: [
       {
         url: OG_IMAGE_URL,
@@ -33,8 +33,8 @@ export const metadata = {
   },
   openGraph: {
     type: 'website',
-    title: 'Boonda - Sign Up',
-    description: 'Sign Up to unlock higher limits on Boonda.',
+    title: 'Boonda - Sign In',
+    description: 'Sign In to your Boonda account to unlock higher limits.',
     images: [
       {
         url: OG_IMAGE_URL,
@@ -56,7 +56,7 @@ export default async function SignIn() {
 
   return (
     <div className="flex w-full justify-center items-center flex-1">
-      <AuthForm intent="sign-up" />
+      <AuthForm intent="desktop-sign-in" />
     </div>
   );
 }

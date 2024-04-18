@@ -56,7 +56,7 @@ export default async function SignIn() {
 
   return (
     <div className="flex w-full justify-center items-center flex-1">
-      <AuthForm intent="sign-up" />
+      <AuthForm intent="desktop-sign-up" />
     </div>
   );
 }

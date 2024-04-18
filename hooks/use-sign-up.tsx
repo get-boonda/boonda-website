@@ -10,8 +10,14 @@ export function useSignUp() {
 
   return useMutation({
     mutationKey: ['sign-up'],
-    mutationFn: async ({ email, password }: z.infer<typeof AuthFormSchema>) => {
-      const response = await fetch('/auth/sign-up', {
+    mutationFn: async ({
+      email,
+      password,
+      intent = 'sign-up',
+    }: z.infer<typeof AuthFormSchema> & {
+      intent?: 'desktop-sign-up' | 'sign-up';
+    }) => {
+      const response = await fetch(`/auth/sign-up?intent=${intent}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
