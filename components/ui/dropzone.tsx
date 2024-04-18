@@ -1,22 +1,35 @@
-import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { cn } from '@/lib/utils';
-import React, { ChangeEvent, useRef } from 'react';
+import {
+  calculateRetention,
+  millisecondsToStr,
+} from "@/app/utils/calculateRetention";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
+import { Upload } from "lucide-react";
+import React, { ChangeEvent, useRef } from "react";
 
 interface DropzoneProps
   extends Omit<
     React.InputHTMLAttributes<HTMLInputElement>,
-    'value' | 'onChange'
+    "value" | "onChange"
   > {
   classNameWrapper?: string;
   className?: string;
   dropMessage: string;
+  isLoggedIn: boolean;
   handleOnDrop: (acceptedFiles: FileList | null) => void;
 }
 
 export const Dropzone = React.forwardRef<HTMLDivElement, DropzoneProps>(
   (
-    { className, classNameWrapper, dropMessage, handleOnDrop, ...props },
+    {
+      className,
+      classNameWrapper,
+      dropMessage,
+      handleOnDrop,
+      isLoggedIn,
+      ...props
+    },
     ref
   ) => {
     const inputRef = useRef<HTMLInputElement | null>(null);
@@ -40,13 +53,17 @@ export const Dropzone = React.forwardRef<HTMLDivElement, DropzoneProps>(
 
     // Function to simulate a click on the file input element
     const handleButtonClick = () => {
-      console.log('Clicked');
-
       if (inputRef.current) {
-        console.log('Clicked 2');
         inputRef.current.click();
       }
     };
+
+    let selectedFile = inputRef.current?.files?.[0];
+    let retention = calculateRetention({
+      isLoggedIn,
+      sizeInBytes: selectedFile?.size || 0,
+    });
+
     return (
       <Card
         ref={ref}
@@ -62,13 +79,32 @@ export const Dropzone = React.forwardRef<HTMLDivElement, DropzoneProps>(
           onClick={handleButtonClick}
         >
           <div className="flex items-center justify-center text-muted-foreground">
-            <span className="font-medium">{dropMessage}</span>
+            {selectedFile ? (
+              <div className="flex flex-col gap-1">
+                <span className="font-medium text-sm">
+                  {`File selected: ${selectedFile.name}`}
+                </span>
+                <span className="font-medium text-center">
+                  {`Retention: ${millisecondsToStr(retention)}`}
+                </span>
+              </div>
+            ) : (
+              <div className="flex flex-col items-center space-y-4">
+                <Upload size={24} />
+                <span className="font-medium">{dropMessage}</span>
+                <span className="font-medium">
+                  File size limit: {isLoggedIn ? "50MB" : "30MB"}
+                </span>
+              </div>
+            )}
+
             <Input
               {...props}
               value={undefined}
               ref={inputRef}
               type="file"
-              className={cn('hidden', className)}
+              multiple={false}
+              className={cn("hidden", className)}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 handleOnDrop(e.target.files)
               }

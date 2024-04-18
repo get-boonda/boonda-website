@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { Button } from '@/components/ui/button';
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -12,24 +12,24 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import Link from 'next/link';
-import { Loader } from 'lucide-react';
-import { useSignIn } from '@/hooks/use-sign-in';
-import { useSignUp } from '@/hooks/use-sign-up';
-import { AuthFormSchema } from '@/shared/validations/auth-form';
-import { useState } from 'react';
+} from "@/components/ui/card";
+import Link from "next/link";
+import { Loader } from "lucide-react";
+import { useSignIn } from "@/hooks/use-sign-in";
+import { useSignUp } from "@/hooks/use-sign-up";
+import { AuthFormSchema } from "@/shared/validations/auth-form";
+import { useState } from "react";
 
 type AuthFormProps = {
-  intent: 'sign-in' | 'sign-up';
+  intent: "sign-in" | "sign-up";
 };
 
 export function AuthForm({ intent }: AuthFormProps) {
@@ -39,15 +39,15 @@ export function AuthForm({ intent }: AuthFormProps) {
   const form = useForm<z.infer<typeof AuthFormSchema>>({
     resolver: zodResolver(AuthFormSchema),
     defaultValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
   });
 
   const isSubmitting = isSigningIn || isSigningUp;
 
   async function onSubmit(values: z.infer<typeof AuthFormSchema>) {
-    if (intent === 'sign-up') {
+    if (intent === "sign-up") {
       setMessage(
         await signUp({
           email: values.email,
@@ -63,27 +63,27 @@ export function AuthForm({ intent }: AuthFormProps) {
     );
   }
 
-  const title = intent === 'sign-in' ? 'Sign In' : 'Sign Up';
+  const title = intent === "sign-in" ? "Sign In" : "Sign Up";
   const description =
-    intent === 'sign-in'
-      ? 'Sign in to your account right now.'
-      : 'Create your account right now.';
+    intent === "sign-in"
+      ? "Sign in to your account right now."
+      : "Create your account right now.";
 
   const accountHelperText =
-    intent === 'sign-in'
-      ? 'Don’t have an account?'
-      : 'Already have an account?';
+    intent === "sign-in"
+      ? "Don’t have an account?"
+      : "Already have an account?";
 
-  const logMessage = intent === 'sign-in' ? 'Sign Up' : 'Sign In';
+  const logMessage = intent === "sign-in" ? "Sign Up" : "Sign In";
   const logMessageRedirectRoute =
-    intent === 'sign-in' ? '/sign-up' : '/sign-in';
+    intent === "sign-in" ? "/sign-up" : "/sign-in";
 
   return (
     <Card className="max-w-[516px] w-full relative bg-zinc-950">
       <div
         style={{
           background:
-            'conic-gradient(from 230.29deg at 51.63% 52.16%, rgb(36, 0, 255) 0deg, rgb(0, 135, 255) 67.5deg, rgb(108, 39, 157) 198.75deg, rgb(24, 38, 163) 251.25deg, rgb(54, 103, 196) 301.88deg, rgb(105, 30, 255) 360deg)',
+            "conic-gradient(from 230.29deg at 51.63% 52.16%, rgb(36, 0, 255) 0deg, rgb(0, 135, 255) 67.5deg, rgb(108, 39, 157) 198.75deg, rgb(24, 38, 163) 251.25deg, rgb(54, 103, 196) 301.88deg, rgb(105, 30, 255) 360deg)",
         }}
         className="blur-[160px] rounded-xl opacity-35 w-full h-full absolute inset-0 pointer-events-none"
       />
@@ -120,7 +120,7 @@ export function AuthForm({ intent }: AuthFormProps) {
                       {...field}
                     />
                   </FormControl>
-                  {intent === 'sign-up' && (
+                  {intent === "sign-up" && (
                     <FormDescription>
                       At least 2 characters long.
                     </FormDescription>
