@@ -4,6 +4,7 @@ import {
 } from "@/app/utils/calculateRetention";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { MAX_ANON_SIZE_BYTES, MAX_LOGGED_SIZE_BYTES } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { Upload } from "lucide-react";
 import React, { ChangeEvent, useRef } from "react";
@@ -58,7 +59,11 @@ export const Dropzone = React.forwardRef<HTMLDivElement, DropzoneProps>(
       }
     };
 
-    let selectedFile = inputRef.current?.files?.[0];
+    let maxSize = isLoggedIn ? MAX_LOGGED_SIZE_BYTES : MAX_ANON_SIZE_BYTES;
+    let selectedFile =
+      (inputRef.current?.files?.[0]?.size ?? 0) <= maxSize
+        ? inputRef.current?.files?.[0]
+        : null;
     let retention = calculateRetention({
       isLoggedIn,
       sizeInBytes: selectedFile?.size || 0,

@@ -18,6 +18,8 @@ import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "sonner";
 import { useSession } from "@/hooks/use-session";
+import { MAX_ANON_SIZE_BYTES, MAX_LOGGED_SIZE_BYTES } from "@/lib/constants";
+import { useEffect, useState } from "react";
 
 export const {
   pushModal,
@@ -63,18 +65,17 @@ export function UploadComponent() {
 
   function handleOnDrop(acceptedFiles: FileList | null) {
     if (acceptedFiles && acceptedFiles.length > 0) {
-      const fileType = acceptedFiles[0].type;
-
-      if (!fileType) {
+      const maxSize = data ? MAX_LOGGED_SIZE_BYTES : MAX_ANON_SIZE_BYTES;
+      if (acceptedFiles[0].size > maxSize) {
         form.setValue("file", null);
-        form.setError("file", {
-          message: "File type is not valid",
+        return form.setError("file", {
+          message: "File is too big",
           type: "typeError",
         });
-      } else {
-        form.setValue("file", acceptedFiles[0]);
-        form.clearErrors("file");
       }
+
+      form.setValue("file", acceptedFiles[0]);
+      form.clearErrors("file");
     } else {
       form.setValue("file", null);
       form.setError("file", {
@@ -108,7 +109,7 @@ export function UploadComponent() {
       <ModalProvider />
       <FormProvider {...form}>
         <form
-          className="flex flex-col items-center justify-center w-96 h-36 gap-2 z-[1] relative"
+          className="flex flex-col items-center justify-center w-96 min-h-36 gap-2 z-[1] relative"
           onSubmit={form.handleSubmit(handleFormSubmit)}
           noValidate
           autoComplete="off"
@@ -127,7 +128,7 @@ export function UploadComponent() {
                     handleOnDrop={handleOnDrop}
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-red-500" />
               </FormItem>
             )}
           />
