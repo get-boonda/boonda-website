@@ -1,3 +1,4 @@
+import { Footer } from '@/components/footer';
 import { Navbar } from '@/components/navbar';
 import { DEFAULT_URL } from '@/lib/constants';
 
@@ -18,10 +19,13 @@ export default function RootLayout({
         background:
           'radial-gradient(ellipse 80% 50% at 50% -15%,rgba(120,119,198,0.3),hsla(0,0%,100%,0))',
       }}
-      className="min-h-screen flex flex-col items-center"
+      className="min-h-screen flex flex-col gap-8 items-center"
     >
-      <Navbar />
-      {children}
+      <div className="w-full flex-1">
+        <Navbar />
+        {children}
+      </div>
+      <Footer />
     </main>
   );
 }

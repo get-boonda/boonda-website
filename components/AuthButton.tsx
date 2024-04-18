@@ -1,22 +1,21 @@
-import {
-  HydrationBoundary,
-  QueryClient,
-  dehydrate,
-} from '@tanstack/react-query';
-import { getSessionServer } from '@/shared/get-session';
-import { NavbarAuthButton } from './navbar-auth-button';
+'use client';
 
-export default async function AuthButton() {
-  const queryClient = new QueryClient();
+import { useSession } from '@/hooks/use-session';
+import { SignOutButton } from './sign-out-button';
+import { Button } from './ui/button';
+import Link from 'next/link';
 
-  await queryClient.prefetchQuery({
-    queryKey: ['session'],
-    queryFn: getSessionServer,
-  });
+export default function AuthButton() {
+  const { data: user } = useSession();
 
-  return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <NavbarAuthButton />
-    </HydrationBoundary>
+  return user ? (
+    <div>
+      <span className="mr-4">{user.email}</span>
+      <SignOutButton />
+    </div>
+  ) : (
+    <Button asChild size="sm">
+      <Link href="/sign-in">Sign in</Link>
+    </Button>
   );
 }

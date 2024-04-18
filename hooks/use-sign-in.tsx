@@ -1,11 +1,12 @@
 'use client';
 
 import { AuthFormSchema } from '@/shared/validations/auth-form';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 
 export function useSignIn() {
+  const queryClient = useQueryClient();
   const router = useRouter();
 
   return useMutation({
@@ -25,10 +26,19 @@ export function useSignIn() {
       let message: string | null = null;
 
       if (response.redirected) {
-        message = new URL(response.url).searchParams.get('message');
+        const url = new URL(response.url);
+        if (url.pathname === '/upload') {
+          router.push('/upload');
+        }
+        message = url.searchParams.get('message');
       }
 
       return message;
+    },
+    onSuccess: () => {
+      queryClient.resetQueries({
+        queryKey: ['session'],
+      });
     },
   });
 }

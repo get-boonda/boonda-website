@@ -1,8 +1,10 @@
-import { Button } from "./ui/button";
+"use client";
+
+import { Button } from "../ui/button";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 
-export async function ShareNowButton() {
+export function ShareNowButton() {
   return (
     <Button asChild>
       <Link href="/upload">

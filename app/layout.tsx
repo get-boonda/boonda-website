@@ -4,6 +4,13 @@ import { cn } from '@/lib/utils';
 import { TanStackQueryProvider } from '@/providers/tanstack-query-provider';
 import { Toaster } from '@/components/ui/sonner';
 import { DEFAULT_URL } from '@/lib/constants';
+import { createClient } from '@/utils/supabase/server';
+import {
+  HydrationBoundary,
+  QueryClient,
+  dehydrate,
+} from '@tanstack/react-query';
+import { Footer } from '@/components/footer';
 
 const fontSans = FontSans({
   subsets: ['latin'],
@@ -16,11 +23,21 @@ export const metadata = {
   description: 'The fastest way to build apps with Next.js and Supabase',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const supabase = createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const queryClient = new QueryClient();
+
+  queryClient.setQueryData(['session'], user);
+
   return (
     <html suppressHydrationWarning lang="en">
       <body
@@ -30,8 +47,10 @@ export default function RootLayout({
         )}
       >
         <TanStackQueryProvider>
-          {children}
-          <Toaster />
+          <HydrationBoundary state={dehydrate(queryClient)}>
+            {children}
+            <Toaster />
+          </HydrationBoundary>
         </TanStackQueryProvider>
       </body>
     </html>

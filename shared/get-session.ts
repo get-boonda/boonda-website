@@ -5,6 +5,8 @@ export async function getSessionServer() {
   const response = await fetch('/auth/session');
   const data = (await response.json()) as UserResponse;
 
+  console.log({ data });
+
   if (data.error) {
     throw new Error(data.error.message);
   }
@@ -16,10 +18,6 @@ export async function getSessionClient() {
   const supabase = createClient();
 
   const data = await supabase.auth.getUser();
-
-  if (data.error) {
-    throw new Error(data.error.message);
-  }
 
   return data.data.user;
 }
