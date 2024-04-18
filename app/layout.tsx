@@ -3,14 +3,13 @@ import './globals.css';
 import { cn } from '@/lib/utils';
 import { TanStackQueryProvider } from '@/providers/tanstack-query-provider';
 import { Toaster } from '@/components/ui/sonner';
-import { DEFAULT_URL } from '@/lib/constants';
+import { DEFAULT_URL, OG_IMAGE_URL } from '@/lib/constants';
 import { createClient } from '@/utils/supabase/server';
 import {
   HydrationBoundary,
   QueryClient,
   dehydrate,
 } from '@tanstack/react-query';
-import { Footer } from '@/components/footer';
 
 const fontSans = FontSans({
   subsets: ['latin'],
@@ -19,8 +18,33 @@ const fontSans = FontSans({
 
 export const metadata = {
   metadataBase: new URL(DEFAULT_URL),
-  title: 'Next.js and Supabase Starter Kit',
-  description: 'The fastest way to build apps with Next.js and Supabase',
+  title: 'Boonda - Upload and Share Files',
+  description: 'The fastest way to upload and share your files.',
+  icons: {
+    icon: [
+      {
+        url: '/logo-white.ico',
+        media: '(prefers-color-scheme: dark)',
+      },
+      {
+        url: '/logo-black.ico',
+        media: '(prefers-color-scheme: light)',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: 'boonda.app',
+    title: 'Boonda - Upload and Share Files',
+    description: 'The fastest way to upload and share your files.',
+    images: OG_IMAGE_URL,
+  },
+  openGraph: {
+    type: 'website',
+    title: 'Boonda - Upload and Share Files',
+    description: 'The fastest way to upload and share your files.',
+    images: OG_IMAGE_URL,
+  },
 };
 
 export default async function RootLayout({

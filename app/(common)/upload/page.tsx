@@ -1,6 +1,13 @@
 import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 import { UploadComponent } from './_components/upload-component';
+import { DEFAULT_URL } from '@/lib/constants';
+
+export const metadata = {
+  metadataBase: new URL(DEFAULT_URL),
+  title: 'Boonda - Upload and Share Files',
+  description: 'Upload and share your files with Boonda.',
+};
 
 export default async function UploadPage() {
   const supabase = createClient();

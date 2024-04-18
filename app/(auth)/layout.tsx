@@ -1,12 +1,5 @@
 import { Footer } from '@/components/footer';
 import { Navbar } from '@/components/navbar';
-import { DEFAULT_URL } from '@/lib/constants';
-
-export const metadata = {
-  metadataBase: new URL(DEFAULT_URL),
-  title: 'Next.js and Supabase Starter Kit',
-  description: 'The fastest way to build apps with Next.js and Supabase',
-};
 
 export default function RootLayout({
   children,
