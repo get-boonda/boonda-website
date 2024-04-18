@@ -32,7 +32,7 @@ export default async function Index() {
               height={776}
               priority={true}
               quality={100}
-              className="border z-[1] relative border-border rounded-lg mx-auto"
+              className="border z-[1] bg-zinc-950 relative border-border rounded-lg mx-auto"
             />
           </div>
         </div>
