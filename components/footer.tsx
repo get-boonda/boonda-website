@@ -5,7 +5,7 @@ import { GitHub } from './svgs/github';
 export function Footer() {
   return (
     <footer className="w-full border-t border-t-foreground/10 p-8 text-xs">
-      <div className="container gap-8 flex justify-between">
+      <div className="container gap-8 flex justify-between sm:flex-row flex-col">
         <Button asChild variant="link" className="p-0 h-auto">
           <Link
             href="https://github.com/nicholascostadev/boonda-website"
@@ -17,7 +17,13 @@ export function Footer() {
             Boonda App
           </Link>
         </Button>
-        <div className="flex items-center justify-end gap-8">
+        <div className="flex md:flex-row flex-col items-center sm:items-end text-center sm:text-right md:items-center justify-end gap-8">
+          <Button asChild variant="link" className="p-0 h-auto">
+            <Link className="font-bold hover:underline" href="/more">
+              More
+            </Link>
+          </Button>
+
           <p>
             Made for{' '}
             <Button asChild variant="link" className="p-0 h-auto">

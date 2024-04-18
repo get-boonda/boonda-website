@@ -9,8 +9,10 @@ export default function AuthButton() {
   const { data: user } = useSession();
 
   return user ? (
-    <div>
-      <span className="mr-4">{user.email}</span>
+    <div className="flex items-center">
+      <span className="mr-4 truncate w-full max-w-20 min-[420px]:max-w-full">
+        {user.email}
+      </span>
       <SignOutButton />
     </div>
   ) : (
