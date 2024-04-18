@@ -10,13 +10,14 @@ import {
   QueryClient,
   dehydrate,
 } from "@tanstack/react-query";
+import { Metadata } from "next";
 
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
 });
 
-export const metadata = {
+export const metadata: Metadata = {
   metadataBase: new URL(DEFAULT_URL),
   title: "Boonda - Upload and Share Files",
   description: "The fastest way to upload and share your files.",
@@ -37,13 +38,21 @@ export const metadata = {
     site: "boonda.app",
     title: "Boonda - Upload and Share Files",
     description: "The fastest way to upload and share your files.",
-    images: OG_IMAGE_URL,
+    images: [
+      {
+        url: OG_IMAGE_URL,
+      },
+    ],
   },
   openGraph: {
     type: "website",
     title: "Boonda - Upload and Share Files",
     description: "The fastest way to upload and share your files.",
-    images: OG_IMAGE_URL,
+    images: [
+      {
+        url: OG_IMAGE_URL,
+      },
+    ],
   },
 };
 

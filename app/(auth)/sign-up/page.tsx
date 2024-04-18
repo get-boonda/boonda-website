@@ -24,13 +24,21 @@ export const metadata = {
     site: 'boonda.app',
     title: 'Boonda - Sign Up',
     description: 'Sign Up to unlock higher limits on Boonda.',
-    images: OG_IMAGE_URL,
+    images: [
+      {
+        url: OG_IMAGE_URL,
+      },
+    ],
   },
   openGraph: {
     type: 'website',
     title: 'Boonda - Sign Up',
     description: 'Sign Up to unlock higher limits on Boonda.',
-    images: OG_IMAGE_URL,
+    images: [
+      {
+        url: OG_IMAGE_URL,
+      },
+    ],
   },
 };
 
