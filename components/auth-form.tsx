@@ -107,13 +107,10 @@ export function AuthForm({ intent }: AuthFormProps) {
     const signInResponse = await signIn({
       email: values.email,
       password: values.password,
+      intent,
     });
 
-    if (intent === 'sign-in') {
-      setMessage(signInResponse);
-      return;
-    }
-
+    setMessage(signInResponse);
     completeDesktopSignIn();
   }
 
