@@ -17,8 +17,6 @@ const fontSans = FontSans({
   variable: "--font-sans",
 });
 
-export const runtime = 'edge'
-
 export const metadata: Metadata = {
   metadataBase: new URL(DEFAULT_URL),
   title: "Boonda - Upload and Share Files",
