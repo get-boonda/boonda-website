@@ -1,6 +1,7 @@
 ## TODO
 
 - [x] Adicionar Metatags e favicon.
+- [ ] Adicionar links para download do App para Windows e MacOS.
 - [ ] Adicionar o tempo que a imagem ficará disponível.
 - [ ] Remover o arquivo do storage após expirar.
 - [x] Adicionar o email do usuário na navbar quando estiver logado.
