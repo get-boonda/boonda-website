@@ -1,25 +1,25 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { Dropzone } from "@/components/ui/dropzone";
+import { Button } from '@/components/ui/button';
+import { Dropzone } from '@/components/ui/dropzone';
 import {
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from "@/components/ui/form";
-import { createPushModal } from "pushmodal";
-import { Dialog } from "@/components/ui/dialog";
-import { UploadSuccessModal } from "@/components/upload-success-modal";
-import { useUpload } from "@/hooks/use-upload";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader } from "lucide-react";
-import { FormProvider, useForm } from "react-hook-form";
-import { z } from "zod";
-import { toast } from "sonner";
-import { useSession } from "@/hooks/use-session";
-import { MAX_ANON_SIZE_BYTES, MAX_LOGGED_SIZE_BYTES } from "@/lib/constants";
-import { useEffect, useState } from "react";
+} from '@/components/ui/form';
+import { createPushModal } from 'pushmodal';
+import { Dialog } from '@/components/ui/dialog';
+import { UploadSuccessModal } from '@/components/upload-success-modal';
+import { useUpload } from '@/hooks/use-upload';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader } from 'lucide-react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { toast } from 'sonner';
+import { useSession } from '@/hooks/use-session';
+import { MAX_ANON_SIZE_BYTES, MAX_LOGGED_SIZE_BYTES } from '@/lib/constants';
+import { useEffect, useState } from 'react';
 
 export const {
   pushModal,
@@ -67,20 +67,20 @@ export function UploadComponent() {
     if (acceptedFiles && acceptedFiles.length > 0) {
       const maxSize = data ? MAX_LOGGED_SIZE_BYTES : MAX_ANON_SIZE_BYTES;
       if (acceptedFiles[0].size > maxSize) {
-        form.setValue("file", null);
-        return form.setError("file", {
-          message: "File is too big",
-          type: "typeError",
+        form.setValue('file', null);
+        return form.setError('file', {
+          message: 'File is too big',
+          type: 'typeError',
         });
       }
 
-      form.setValue("file", acceptedFiles[0]);
-      form.clearErrors("file");
+      form.setValue('file', acceptedFiles[0]);
+      form.clearErrors('file');
     } else {
-      form.setValue("file", null);
-      form.setError("file", {
-        message: "File is required",
-        type: "typeError",
+      form.setValue('file', null);
+      form.setError('file', {
+        message: 'File is required',
+        type: 'typeError',
       });
     }
   }
@@ -93,11 +93,11 @@ export function UploadComponent() {
     upload(values.file, {
       onSuccess: (url) => {
         if (!url) {
-          toast.error("An error occurred while uploading the file");
+          toast.error('An error occurred while uploading the file');
           return;
         }
 
-        pushModal("UploadSuccessDialog", {
+        pushModal('UploadSuccessDialog', {
           fileURL: url,
         });
       },
@@ -134,9 +134,9 @@ export function UploadComponent() {
           />
           <div className="flex justify-end items-center w-full">
             <Button
-              className="w-full opacity-100"
+              className="w-full opacity-100 cursor-pointer"
               type="submit"
-              disabled={!form.watch("file") && !isUploading}
+              disabled={(!form.watch('file') && !isUploading) || isUploading}
             >
               {isUploading && <Loader className="size-4 animate-spin mr-2" />}
               Upload
