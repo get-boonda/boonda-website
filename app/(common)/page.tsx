@@ -12,7 +12,9 @@ const containerVariants: Variants = {
     y: 0,
   },
   shown: {
-    scale: [1, 0.94, 0.94, 1],
+    scale: [
+      1, 0.96, 0.96, 0.96, 0.96, 0.96, 0.96, 0.96, 0.96, 0.96, 0.96, 0.94, 1,
+    ],
     y: 0,
     transition: {
       duration: 4.5,
