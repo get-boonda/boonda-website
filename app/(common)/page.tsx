@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import Header from '@/components/Hero/Header';
-import Image from 'next/image';
-import { Variants, motion, useAnimate } from 'framer-motion';
+import Header from "@/components/Hero/Header";
+import Image from "next/image";
+import { Variants, motion, useAnimate } from "framer-motion";
 
 const MotionImage = motion(Image);
 
@@ -16,20 +16,23 @@ const containerVariants: Variants = {
     y: 0,
     transition: {
       duration: 4.5,
-      ease: 'backOut',
+      ease: "backOut",
     },
   },
 };
+
+export const dynamic = "force-static";
+export const revalidate = 60;
 
 export default function Index() {
   const [scope, animate] = useAnimate();
 
   function handleHover() {
-    animate(scope.current, { filter: 'blur(46px)', inset: -4 });
+    animate(scope.current, { filter: "blur(46px)", inset: -4 });
   }
 
   function handleRemoveHover() {
-    animate(scope.current, { filter: 'blur(32px)', inter: 0 });
+    animate(scope.current, { filter: "blur(32px)", inter: 0 });
   }
 
   return (
@@ -42,7 +45,7 @@ export default function Index() {
           <div
             style={{
               background:
-                'conic-gradient(from 230.29deg at 51.63% 52.16%, rgb(36, 0, 255) 0deg, rgb(0, 135, 255) 67.5deg, rgb(108, 39, 157) 198.75deg, rgb(24, 38, 163) 251.25deg, rgb(54, 103, 196) 301.88deg, rgb(105, 30, 255) 360deg)',
+                "conic-gradient(from 230.29deg at 51.63% 52.16%, rgb(36, 0, 255) 0deg, rgb(0, 135, 255) 67.5deg, rgb(108, 39, 157) 198.75deg, rgb(24, 38, 163) 251.25deg, rgb(54, 103, 196) 301.88deg, rgb(105, 30, 255) 360deg)",
             }}
             className="blur-[160px] opacity-35 w-full h-full absolute inset-0 top-12 pointer-events-none"
           />
@@ -55,20 +58,20 @@ export default function Index() {
             <motion.div
               ref={scope}
               initial={{
-                filter: 'blur(28px)',
+                filter: "blur(28px)",
                 opacity: 0.8,
                 inset: 0,
               }}
               animate={{
-                filter: 'blur(36px)',
+                filter: "blur(36px)",
                 opacity: 1,
                 repeatCount: Infinity,
               }}
               transition={{
                 duration: 2,
-                ease: 'backOut',
+                ease: "backOut",
                 repeat: Infinity,
-                repeatType: 'reverse',
+                repeatType: "reverse",
               }}
               className="absolute bg-purple-600/50 blur-xl transition-all rounded-lg opacity-50"
             ></motion.div>
