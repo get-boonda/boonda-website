@@ -3,6 +3,7 @@
 import { AuthFormSchema } from '@/shared/validations/auth-form';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 import { z } from 'zod';
 
 export function useSignIn() {
@@ -11,7 +12,13 @@ export function useSignIn() {
 
   return useMutation({
     mutationKey: ['sign-in'],
-    mutationFn: async ({ email, password }: z.infer<typeof AuthFormSchema>) => {
+    mutationFn: async ({
+      email,
+      password,
+      intent,
+    }: z.infer<typeof AuthFormSchema> & {
+      intent: 'sign-in' | 'desktop-sign-in';
+    }) => {
       const response = await fetch('/auth/sign-in', {
         method: 'POST',
         headers: {
@@ -27,10 +34,14 @@ export function useSignIn() {
 
       if (response.redirected) {
         const url = new URL(response.url);
-        if (url.pathname === '/upload') {
+        if (url.pathname === '/upload' && intent !== 'desktop-sign-in') {
           router.push('/upload');
         }
-        message = url.searchParams.get('message');
+        if (intent === 'desktop-sign-in') {
+          message = 'Check your desktop app!';
+        } else {
+          message = url.searchParams.get('message');
+        }
       }
 
       return message;
