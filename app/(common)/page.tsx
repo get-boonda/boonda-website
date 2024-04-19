@@ -1,7 +1,37 @@
+'use client';
+
 import Header from '@/components/Hero/Header';
 import Image from 'next/image';
+import { Variants, motion, useAnimate } from 'framer-motion';
 
-export default async function Index() {
+const MotionImage = motion(Image);
+
+const containerVariants: Variants = {
+  hidden: {
+    scale: 1,
+    y: 0,
+  },
+  shown: {
+    scale: [1, 0.94, 0.94, 1],
+    y: 0,
+    transition: {
+      duration: 4.5,
+      ease: 'backOut',
+    },
+  },
+};
+
+export default function Index() {
+  const [scope, animate] = useAnimate();
+
+  function handleHover() {
+    animate(scope.current, { filter: 'blur(46px)', inset: -4 });
+  }
+
+  function handleRemoveHover() {
+    animate(scope.current, { filter: 'blur(32px)', inter: 0 });
+  }
+
   return (
     <div className="flex-1 w-full flex flex-col items-center">
       <div className="flex-1 w-full flex flex-col gap-0 items-center">
@@ -17,17 +47,41 @@ export default async function Index() {
             className="blur-[160px] opacity-35 w-full h-full absolute inset-0 top-12 pointer-events-none"
           />
 
-          <div className="rounded-lg relative">
-            <div
-              style={{
-                animationDuration: '20000ms',
-                transitionDuration: '2000ms',
+          <div
+            className="rounded-lg relative"
+            onMouseOver={handleHover}
+            onMouseLeave={handleRemoveHover}
+          >
+            <motion.div
+              ref={scope}
+              initial={{
+                filter: 'blur(28px)',
+                opacity: 0.8,
+                inset: 0,
               }}
-              className="absolute inset-0 bg-purple-600/50 blur-xl transition-all rounded-lg group-hover:blur-3xl animate-pulse opacity-50 group-hover:bg-purple-600/80"
-            ></div>
-            <Image
+              animate={{
+                filter: 'blur(36px)',
+                opacity: 1,
+                repeatCount: Infinity,
+              }}
+              transition={{
+                duration: 2,
+                ease: 'backOut',
+                repeat: Infinity,
+                repeatType: 'reverse',
+              }}
+              className="absolute bg-purple-600/50 blur-xl transition-all rounded-lg opacity-50"
+            ></motion.div>
+            <MotionImage
+              variants={containerVariants}
+              initial="hidden"
+              animate="shown"
               alt="Project Preview"
               src="/landing.png"
+              transition={{
+                scale: { duration: 0.5 },
+                rotateX: { duration: 2 },
+              }}
               width={1370}
               height={776}
               priority={true}

@@ -17,7 +17,8 @@ const ShinyButton = () => {
       href="/upload"
       initial={{ '--x': '100%', scale: 1 }}
       animate={{ '--x': '-100%' }}
-      whileTap={{ scale: 0.97 }}
+      whileTap={{ scale: 0.97, transition: { duration: 0.5 } }}
+      whileHover={{ scale: 1.05, transition: { duration: 0.5 } }}
       transition={{
         repeat: Infinity,
         repeatType: 'loop',
