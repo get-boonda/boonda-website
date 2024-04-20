@@ -27,19 +27,29 @@ export default function DownloadPage() {
       <div className="flex gap-3">
         <Button className="flex justify-center gap-1" size="lg" asChild>
           <Link
-            href="https://dagrxagqkexvgylcbiqz.supabase.co/storage/v1/object/public/opengraph/paper-1.19.4-550.jar?t=2024-04-20T01%3A35%3A01.325Z"
+            href="https://dagrxagqkexvgylcbiqz.supabase.co/storage/v1/object/public/opengraph/Boonda_0.0.0_universal.dmg"
             download
           >
             <FaApple size={24} /> MacOS
           </Link>
         </Button>
-        <Button className="flex gap-3" size="lg">
-          <FaWindows size={24} />
-          Windows
+        <Button className="flex gap-3" size="lg" asChild>
+          <Link
+            href="https://dagrxagqkexvgylcbiqz.supabase.co/storage/v1/object/public/opengraph/Boonda_0.0.0_x64_en-US.msi"
+            download
+          >
+            <FaWindows size={24} />
+            Windows
+          </Link>
         </Button>
         <Button className="flex gap-3" size="lg">
-          <FaLinux size={24} />
-          Linux
+          <Link
+            href="https://dagrxagqkexvgylcbiqz.supabase.co/storage/v1/object/public/opengraph/"
+            download
+          >
+            <FaLinux size={24} />
+            Linux
+          </Link>
         </Button>
       </div>
       <div className="w-full container relative pt-24 group">
