@@ -44,7 +44,7 @@ export default function DownloadPage() {
         </Button>
         <Button className="flex gap-3" size="lg" asChild>
           <Link
-            href="https://egadzpihqqykcwdpkjcg.supabase.co/storage/v1/object/public/general-public-files/boonda.deb"
+            href="https://egadzpihqqykcwdpkjcg.supabase.co/storage/v1/object/public/general-public-files/boonda.AppImage"
             download
           >
             <FaUbuntu size={24} />
