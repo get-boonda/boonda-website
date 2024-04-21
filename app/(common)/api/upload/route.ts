@@ -59,7 +59,7 @@ export async function POST(request: Request) {
 
   const expiresAt = new Date(Date.now() + retention).getTime();
 
-  const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/files/${generatedFileName}`;
+  const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/general-public-files/${generatedFileName}`;
 
   return new Response(JSON.stringify({ uploadInfo, expiresAt, url }), {
     status: 200,
