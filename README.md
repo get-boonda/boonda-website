@@ -13,5 +13,5 @@
 - [x] Tratar os erros do desktop.
 - [ ] Montar o README.
 - [ ] Fazer a submissão do projeto [hackathon submission](https://www.madewithsupabase.com/hackathons/open-source-2024)
-- [ ] Adicionar Cloudflare
 - [ ] Arrumar incompatibilidade com Linux (talvez o Tauriv2 arrume)
+- [ ] Monorepo
