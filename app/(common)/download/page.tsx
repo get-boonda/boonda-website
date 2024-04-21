@@ -27,7 +27,7 @@ export default function DownloadPage() {
       <div className="flex gap-3">
         <Button className="flex justify-center gap-1" size="lg" asChild>
           <Link
-            href="https://egadzpihqqykcwdpkjcg.supabase.co/storage/v1/object/public/opengraph/boonda_universal.dmg"
+            href="https://egadzpihqqykcwdpkjcg.supabase.co/storage/v1/object/public/general-public-files/boonda_universal.dmg"
             download
           >
             <FaApple size={24} /> MacOS
@@ -35,7 +35,7 @@ export default function DownloadPage() {
         </Button>
         <Button className="flex gap-3" size="lg" asChild>
           <Link
-            href="https://egadzpihqqykcwdpkjcg.supabase.co/storage/v1/object/public/opengraph/boonda.msi"
+            href="https://egadzpihqqykcwdpkjcg.supabase.co/storage/v1/object/public/general-public-files/boonda.msi"
             download
           >
             <FaWindows size={24} />
@@ -44,7 +44,7 @@ export default function DownloadPage() {
         </Button>
         <Button className="flex gap-3" size="lg" asChild>
           <Link
-            href="https://egadzpihqqykcwdpkjcg.supabase.co/storage/v1/object/public/opengraph/boonda.appimage"
+            href="https://egadzpihqqykcwdpkjcg.supabase.co/storage/v1/object/public/general-public-files/boonda.appimage"
             download
           >
             <FaLinux size={24} />
@@ -87,7 +87,7 @@ export default function DownloadPage() {
           ></motion.div>
           <motion.video
             initial="shown"
-            src="https://egadzpihqqykcwdpkjcg.supabase.co/storage/v1/object/public/opengraph/desktop_video.mp4"
+            src="https://egadzpihqqykcwdpkjcg.supabase.co/storage/v1/object/public/general-public-files/desktop_video.mp4"
             width={1370}
             height={776}
             autoPlay
