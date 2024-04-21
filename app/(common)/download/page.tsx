@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { FaApple, FaWindows, FaLinux, FaUbuntu } from "react-icons/fa";
+import { FaApple, FaWindows, FaLinux } from "react-icons/fa";
 import { motion, useAnimate } from "framer-motion";
 import Link from "next/link";
 
@@ -47,8 +47,8 @@ export default function DownloadPage() {
             href="https://egadzpihqqykcwdpkjcg.supabase.co/storage/v1/object/public/general-public-files/boonda.AppImage"
             download
           >
-            <FaUbuntu size={24} />
-            Ubuntu
+            <FaLinux size={24} />
+            Linux
           </Link>
         </Button>
       </div>
