@@ -42,7 +42,7 @@ export default function DownloadPage() {
             Windows
           </Link>
         </Button>
-        <Button className="flex gap-3" size="lg">
+        <Button className="flex gap-3" size="lg" asChild>
           <Link
             href="https://dagrxagqkexvgylcbiqz.supabase.co/storage/v1/object/public/opengraph/"
             download
