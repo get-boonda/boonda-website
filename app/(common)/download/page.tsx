@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { FaApple, FaWindows, FaLinux } from "react-icons/fa";
+import { FaApple, FaWindows, FaLinux, FaUbuntu } from "react-icons/fa";
 import { motion, useAnimate } from "framer-motion";
 import Link from "next/link";
 
@@ -44,11 +44,11 @@ export default function DownloadPage() {
         </Button>
         <Button className="flex gap-3" size="lg" asChild>
           <Link
-            href="https://egadzpihqqykcwdpkjcg.supabase.co/storage/v1/object/public/general-public-files/boonda.appimage"
+            href="https://egadzpihqqykcwdpkjcg.supabase.co/storage/v1/object/public/general-public-files/boonda.deb"
             download
           >
-            <FaLinux size={24} />
-            Linux
+            <FaUbuntu size={24} />
+            Ubuntu
           </Link>
         </Button>
       </div>
