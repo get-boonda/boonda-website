@@ -1,4 +1,6 @@
 "use client";
+import Link from "next/link";
+import { Button } from "../ui/button";
 import { ShareNowButton } from "./share-now-button";
 import { motion, useAnimate } from "framer-motion";
 
